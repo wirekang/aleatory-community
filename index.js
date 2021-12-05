@@ -3,6 +3,13 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
+const rateLimit = require("express-rate-limit")
+const limiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 240,
+})
+
+app.use(limiter);
 app.use(express.static(__dirname + "/public"))
 
 const logic = require("./logic")
